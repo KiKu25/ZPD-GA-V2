@@ -4,24 +4,35 @@ using UnityEngine;
 
 public class RangeMarker : MonoBehaviour {
 
+    private List<string> numbersToGenerate;
 
-    //TODO make this use a list
-    string[] numbersToGenerate = new string[];
+    private Dictionary<string, Sprite> dictSprite;
 
-	// Use this for initialization
-	void Start () {
+    private float offset = 0.3f;
+
+    // Use this for initialization
+    void Start () {
+        dictSprite = new Dictionary<string, Sprite>();
+        numbersToGenerate = new List<string>();
+        GetSprites();
         SpawnNumbers();
 	}
 	
 	private void SpawnNumbers()
     {
+
+        float currentOffset = 0;
+
         ToNumber();
-        for (int i = 0; i < numbersToGenerate.Length; i++)
+        for (int i = 0; i < numbersToGenerate.Count; i++)
         {
             GameObject go = new GameObject();
             go.name = numbersToGenerate[i];
-            go.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            go.transform.position = new Vector3(transform.position.x + currentOffset - StartingXOffset(), transform.position.y, transform.position.z);
             go.transform.SetParent(gameObject.transform, true);
+            SpriteRenderer sp = go.AddComponent<SpriteRenderer>();
+            sp.sprite = GetSprite(numbersToGenerate[i]);
+            currentOffset += offset;
         }
     }
 
@@ -42,42 +53,69 @@ public class RangeMarker : MonoBehaviour {
             switch (chare)
             {
                 case '-':
-                    numbersToGenerate[i] = "Minus";
+                    numbersToGenerate.Add("Minus");
                     break;
                 case '0':
-                    numbersToGenerate[i] = "0";
+                    numbersToGenerate.Add("0");
                     break;
                 case '1':
-                    numbersToGenerate[i] = "1";
+                    numbersToGenerate.Add("1");
                     break;
                 case '2':
-                    numbersToGenerate[i] = "2";
+                    numbersToGenerate.Add("2");
                     break;
                 case '3':
-                    numbersToGenerate[i] = "3";
+                    numbersToGenerate.Add("3");
                     break;
                 case '4':
-                    numbersToGenerate[i] = "4";
+                    numbersToGenerate.Add("4");
                     break;
                 case '5':
-                    numbersToGenerate[i] = "5";
+                    numbersToGenerate.Add("5");
                     break;
                 case '6':
-                    numbersToGenerate[i] = "6";
+                    numbersToGenerate.Add("6");
                     break;
                 case '7':
-                    numbersToGenerate[i] = "7";
+                    numbersToGenerate.Add("7");
                     break;
                 case '8':
-                    numbersToGenerate[i] = "8";
+                    numbersToGenerate.Add("8");
                     break;
                 case '9':
-                    numbersToGenerate[i] = "9";
+                    numbersToGenerate.Add("9");
                     break;
                 default:
                     Debug.LogError("Can not transform char: " + chare);
                     break;
             }
+        }
+    }
+
+    private void GetSprites()
+    {
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Images/Numbers");
+        foreach (Sprite sprite in sprites)
+        {
+            dictSprite.Add(sprite.name, sprite);
+        }
+    }
+
+    private Sprite GetSprite(string sprite)
+    {
+        sprite = "Number_" + sprite;
+        return dictSprite[sprite];
+    }
+
+    private float StartingXOffset()
+    {
+        if (numbersToGenerate[0] == "0")
+        {
+            return 0;
+        }
+        else
+        {
+            return (numbersToGenerate.Count * offset) / 5;
         }
     }
 }
