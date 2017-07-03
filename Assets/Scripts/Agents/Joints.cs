@@ -6,16 +6,18 @@ public class Joints : MonoBehaviour {
 
     private SpringJoint2D spJoint;
 
+    public GameObject goTarget;
     public GameObject goMuscle;
 
     public float minDist { get; set; }
     public float maxDist { get; set; }
     public bool spawnMuscle = true;
 
-    private void Start()
+    private void Awake()
     { 
         spJoint = GetComponent<SpringJoint2D>();
-        SpawnMuscle(spJoint.connectedBody.GetComponent<GameObject>());
+        spJoint.connectedBody = goTarget.GetComponent<Rigidbody2D>();
+        SpawnMuscle(goTarget);
     }
 
     private void Update()
