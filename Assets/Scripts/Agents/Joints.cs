@@ -22,10 +22,7 @@ public class Joints : MonoBehaviour {
 
     private void Update()
     {
-        if (minDist != 0 || maxDist != 0)
-        {
-            ClampDistance(minDist, maxDist);
-        }
+        ClampDistance(minDist, maxDist);
     }
 
     private void SpawnMuscle(GameObject target)
@@ -41,17 +38,20 @@ public class Joints : MonoBehaviour {
 
     private void ClampDistance(float min, float max)
     {
-        if (spJoint.distance > max)
+        if (max != 0)
         {
-            spJoint.distance = max;
-        }
-        else if (spJoint.distance < min)
-        {
-            spJoint.distance = min;
+            if (spJoint.distance > max)
+            {
+                spJoint.distance = max;
+            }
+            else if (spJoint.distance < min)
+            {
+                spJoint.distance = min;
+            }  
         }
     }
 
-    private void SetDamping(float amount)
+    public void SetDamping(float amount)
     {
         if (1 < amount)
         {
@@ -67,7 +67,12 @@ public class Joints : MonoBehaviour {
         }
     }
 
-    private void SetFrequency(float amount)
+    public float GetDamping()
+    {
+        return spJoint.dampingRatio;
+    }
+
+    public void SetFrequency(float amount)
     {
         if (0 > amount)
         {
@@ -77,5 +82,10 @@ public class Joints : MonoBehaviour {
         {
             spJoint.frequency = amount;
         }
+    }
+
+    public float GetFrequency()
+    {
+        return spJoint.frequency;
     }
 }

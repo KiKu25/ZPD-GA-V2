@@ -14,6 +14,10 @@ public class customButton : Editor
         {
             myScript.SpawnTestAgent();
         }
+        if (GUILayout.Button("Save Agent"))
+        {
+            myScript.SaveAgent();
+        }
     }
 
 }
