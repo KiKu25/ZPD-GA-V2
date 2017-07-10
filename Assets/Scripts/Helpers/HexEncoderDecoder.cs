@@ -36,6 +36,18 @@ public class HexEncoderDecoder{
 
         value = (float)Math.Round(value, 2);
         value = value / -0.01f;
-        return value.ToString("X");
+        return EncodeHex((int)value);
+    }
+
+    public float DecodHexToFloat(string hexString, int decimalPlace)
+    {
+        float value = Convert.ToInt32(hexString, 16);
+        return (value * (1 / (float)Math.Pow(10, decimalPlace)));
+    }
+
+    public string EncodeFloatToHex(float value, int decimalPlace)
+    {
+        value = value / (1 / (float)Math.Pow(10, decimalPlace));
+        return EncodeHex((int)value);
     }
 }

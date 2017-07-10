@@ -65,18 +65,36 @@ public class AgentMaster : MonoBehaviour {
         testSeed2 = "";
         //Nodes
         testSeed2 += hexEnDe.EncodeHex(goNodes.Count);
-        GameObject temp;
 
-        for (int i = 0; i < goNodes.Count; i++)
+        for (int i = 0; i < 5; i++)
         {
-            temp = goNodes.Values[i];
-            //nodeNr(1)
-            testSeed2 += hexEnDe.EncodeHex(i);
-            //nodeLoactinX(2)
-            testSeed2 += hexEnDe.EncodeHexXY(temp.transform.position.x, startX);
-            //nodeLoactinY(2)
-            testSeed2 += hexEnDe.EncodeHexXY(temp.transform.position.y, startY);
+            if (goNodes.Count > i)
+            {
+                GameObject goNode = goNodes.Values[i];
+                GameObject goMuscle = goMuscles.Values[i];
 
+                Muscle muscle = goMuscle.GetComponent<Muscle>();
+                Joints joint = goNode.GetComponent<Joints>();
+
+                //nodeNr(1)
+                testSeed2 += hexEnDe.EncodeHex(i);
+                //nodeLoactinX(2)
+                testSeed2 += hexEnDe.EncodeHexXY(goNode.transform.position.x, startX);
+                //nodeLoactinY(2)
+                testSeed2 += hexEnDe.EncodeHexXY(goNode.transform.position.y, startY);
+                //muscleMinDist(3)
+                testSeed2 += hexEnDe.EncodeHex((int)muscle.minDist);
+                //muscleMaxDist(3)
+                testSeed2 += hexEnDe.EncodeHex((int)muscle.maxDist);
+                //muscleDamping(1)
+                testSeed2 += hexEnDe.EncodeFloatToHex(joint.GetDamping(), 1);
+                //muscleFeruency(2)
+                testSeed2 += hexEnDe.EncodeFloatToHex(joint.GetFrequency(), 1);
+            }
+            else
+            {
+                testSeed2 += "0000000000000000000";
+            }
         }
 
         //Log Seed to Console
