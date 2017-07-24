@@ -15,6 +15,9 @@ public class SpawnRangeMarkers : MonoBehaviour {
         GenRangeMarkers();
 	}
 	
+    /// <summary>
+    /// Generates Range Markers
+    /// </summary>
 	private void GenRangeMarkers()
     {
         GameObject go = new GameObject();

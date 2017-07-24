@@ -43,17 +43,20 @@ public class AgentMaster : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Saves the seed of the current agent
+    /// </summary>
     public void SaveAgent()
     {
         GameObject goAgent = GameObject.FindGameObjectWithTag("Agent");
-        SortedList<string, GameObject> goMuscles = new SortedList<string, GameObject>();
+        //SortedList<string, GameObject> goMuscles = new SortedList<string, GameObject>();
         SortedList<string, GameObject> goNodes = new SortedList<string, GameObject>();
-
-        GameObject[] tempAr = GameObject.FindGameObjectsWithTag("Muscle");
-        foreach (GameObject muscle in tempAr)
-        {
-            goMuscles.Add(muscle.name, muscle);
-        }
+        GameObject[] tempAr;
+        //TODO: Ja izmanto jamain vards no "Muscle (Clone)" uz "Muslce (1)", "Muslce (2)" utt. savadak  so metodi nevar izmantot
+        //foreach (GameObject muscle in tempAr)
+        //{
+        //    goMuscles.Add(muscle.name, muscle);
+        //}
 
         tempAr = GameObject.FindGameObjectsWithTag("Node");
         foreach (GameObject node in tempAr)
@@ -61,7 +64,7 @@ public class AgentMaster : MonoBehaviour {
             goNodes.Add(node.name, node);
         }
 
-        //Make a Seed
+        //Make a blank Seed
         testSeed2 = "";
         //Nodes
         testSeed2 += hexEnDe.EncodeHex(goNodes.Count);
@@ -71,16 +74,16 @@ public class AgentMaster : MonoBehaviour {
             if (goNodes.Count > i)
             {
                 GameObject goNode = goNodes.Values[i];
-                GameObject goMuscle = goMuscles.Values[i];
+                //GameObject goMuscle = goMuscles.Values[i];
 
                 Joints joint = goNode.GetComponent<Joints>();
 
                 //nodeNr(1)
                 testSeed2 += hexEnDe.EncodeHex(i);
                 //nodeLoactinX(2)
-                testSeed2 += hexEnDe.EncodeHexXY(goNode.transform.position.x, startX);
+                testSeed2 += hexEnDe.EncodeHexWithOffset(goNode.transform.position.x, startX);
                 //nodeLoactinY(2)
-                testSeed2 += hexEnDe.EncodeHexXY(goNode.transform.position.y, startY);
+                testSeed2 += hexEnDe.EncodeHexWithOffset(goNode.transform.position.y, startY);
                 //muscleMinDist(3)
                 testSeed2 += hexEnDe.EncodeHex((int)joint.minDist);
                 //muscleMaxDist(3)

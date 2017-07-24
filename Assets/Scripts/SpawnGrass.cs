@@ -20,6 +20,9 @@ public class SpawnGrass : MonoBehaviour {
         GenGrass();
 	}
 
+    /// <summary>
+    /// Generates Grass
+    /// </summary>
     private void GenGrass()
     {
         GameObject parent = new GameObject();

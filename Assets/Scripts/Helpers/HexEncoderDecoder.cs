@@ -4,23 +4,45 @@ using System;
 
 public class HexEncoderDecoder{
 
+    /// <summary>
+    /// Decodes from hex to int
+    /// </summary>
+    /// <param name="hexString"></param>
+    /// <returns></returns>
     public int DecodHex(string hexString)
     {
         return Convert.ToInt32(hexString, 16);
     }
 
+    /// <summary>
+    /// Encodes from int to hex
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public string EncodeHex(int value)
     {
         return value.ToString("X");
     }
 
-    public float DecodHexXY(string hexString, float xy)
+    /// <summary>
+    /// Decodes from hex to flot with an offset
+    /// </summary>
+    /// <param name="hexString"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    public float DecodHexWithOffset(string hexString, float xy)
     {
         float value = Convert.ToInt32(hexString, 16);
         return (value * -0.01f) + xy;
     }
 
-    public string EncodeHexXY(float value, float xy)
+    /// <summary>
+    /// Encodes from float to hex with an offset
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    public string EncodeHexWithOffset(float value, float xy)
     {
         float maxXY = 2.55f;
         value = value - xy;
@@ -39,12 +61,24 @@ public class HexEncoderDecoder{
         return EncodeHex((int)value);
     }
 
+    /// <summary>
+    /// Decodes from hex to float, who has a floating point
+    /// </summary>
+    /// <param name="hexString"></param>
+    /// <param name="decimalPlace"></param>
+    /// <returns></returns>
     public float DecodHexToFloat(string hexString, int decimalPlace)
     {
         float value = Convert.ToInt32(hexString, 16);
         return (value * (1 / (float)Math.Pow(10, decimalPlace)));
     }
 
+    /// <summary>
+    /// Encodes from float, who has a floating, point to hex
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="decimalPlace"></param>
+    /// <returns></returns>
     public string EncodeFloatToHex(float value, int decimalPlace)
     {
         value = value / (1 / (float)Math.Pow(10, decimalPlace));

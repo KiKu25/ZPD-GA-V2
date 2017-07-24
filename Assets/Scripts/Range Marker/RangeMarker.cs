@@ -18,6 +18,9 @@ public class RangeMarker : MonoBehaviour {
         SpawnNumbers();
 	}
 	
+    /// <summary>
+    /// Spawns Numbers who show range
+    /// </summary>
 	private void SpawnNumbers()
     {
 
@@ -36,11 +39,18 @@ public class RangeMarker : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Generates a string from a position
+    /// </summary>
+    /// <returns></returns>
     private string GenString()
     {
         return Mathf.RoundToInt(gameObject.transform.position.x).ToString();
     }
 
+    /// <summary>
+    /// Converts striong to number
+    /// </summary>
     private void ToNumber()
     {
         string number = GenString();
@@ -92,6 +102,9 @@ public class RangeMarker : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Gets all sprites in a file
+    /// </summary>
     private void GetSprites()
     {
         Sprite[] sprites = Resources.LoadAll<Sprite>("Images/Numbers");
@@ -101,12 +114,21 @@ public class RangeMarker : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Adds sprites to a dictionary
+    /// </summary>
+    /// <param name="sprite"></param>
+    /// <returns></returns>
     private Sprite GetSprite(string sprite)
     {
         sprite = "Number_" + sprite;
         return dictSprite[sprite];
     }
 
+    /// <summary>
+    /// To center the number
+    /// </summary>
+    /// <returns></returns>
     private float StartingXOffset()
     {
         if (numbersToGenerate[0] == "0")

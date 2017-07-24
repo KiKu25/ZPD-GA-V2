@@ -18,7 +18,7 @@ public class Joints : MonoBehaviour {
     { 
         spJoint = GetComponent<SpringJoint2D>();
         spJoint.connectedBody = goTarget.GetComponent<Rigidbody2D>();
-        SpawnMuscle(goTarget);
+        SpawnMuscle();
     }
 
     private void Update()
@@ -27,14 +27,23 @@ public class Joints : MonoBehaviour {
         UpdateMuscle();
     }
 
-    private void SpawnMuscle(GameObject target)
+    /// <summary>
+    /// Spawns Muscle
+    /// </summary>
+    private void SpawnMuscle()
     {
         if (spawnMuscle)
         {
             goMuscle = Instantiate(goMusclePrfab, new Vector3(), Quaternion.identity);
+            goMuscle.transform.SetParent(transform);
         }
     }
 
+    /// <summary>
+    /// Clamp Distance of Muscle
+    /// </summary>
+    /// <param name="minDistance"></param>
+    /// <param name="maxDistance"></param>
     private void ClampDistance(float min, float max)
     {
         if (max != 0)
@@ -50,6 +59,10 @@ public class Joints : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Get Damping amount
+    /// </summary>
+    /// <param name="amount"></param>
     public void SetDamping(float amount)
     {
         if (1 < amount)
@@ -66,11 +79,19 @@ public class Joints : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Get Damping amount
+    /// </summary>
+    /// <returns></returns>
     public float GetDamping()
     {
         return spJoint.dampingRatio;
     }
 
+    /// <summary>
+    /// Set Frequency
+    /// </summary>
+    /// <param name="amount"></param>
     public void SetFrequency(float amount)
     {
         if (0 > amount)
@@ -83,11 +104,18 @@ public class Joints : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Get Frequency
+    /// </summary>
+    /// <returns></returns>
     public float GetFrequency()
     {
         return spJoint.frequency;
     }
 
+    /// <summary>
+    /// Muscle Loacation and Rotation
+    /// </summary>
     private void UpdateMuscle()
     {
         goMuscle.transform.localScale = new Vector3(1, 4 * GetDistance(goTarget), 1);
@@ -95,11 +123,21 @@ public class Joints : MonoBehaviour {
         goMuscle.transform.eulerAngles = new Vector3(0, 0, 90 - GetAngle(goTarget.transform.position));
     }
 
+    /// <summary>
+    /// Get Distance betweene two GameObjects
+    /// </summary>
+    /// <param name="goTarget"></param>
+    /// <returns></returns>
     private float GetDistance(GameObject obj1)
     {
         return Vector3.Distance(transform.position, obj1.transform.position);
     }
 
+    /// <summary>
+    /// Get Angle betweene tow GameObjects
+    /// </summary>
+    /// <param name="vector"></param>
+    /// <returns></returns>
     private float GetAngle(Vector3 vec1)
     {
         Vector3 diference = vec1 - transform.position;
