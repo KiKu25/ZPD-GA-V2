@@ -73,7 +73,6 @@ public class AgentMaster : MonoBehaviour {
                 GameObject goNode = goNodes.Values[i];
                 GameObject goMuscle = goMuscles.Values[i];
 
-                Muscle muscle = goMuscle.GetComponent<Muscle>();
                 Joints joint = goNode.GetComponent<Joints>();
 
                 //nodeNr(1)
@@ -83,9 +82,9 @@ public class AgentMaster : MonoBehaviour {
                 //nodeLoactinY(2)
                 testSeed2 += hexEnDe.EncodeHexXY(goNode.transform.position.y, startY);
                 //muscleMinDist(3)
-                testSeed2 += hexEnDe.EncodeHex((int)muscle.minDist);
+                testSeed2 += hexEnDe.EncodeHex((int)joint.minDist);
                 //muscleMaxDist(3)
-                testSeed2 += hexEnDe.EncodeHex((int)muscle.maxDist);
+                testSeed2 += hexEnDe.EncodeHex((int)joint.maxDist);
                 //muscleDamping(1)
                 testSeed2 += hexEnDe.EncodeFloatToHex(joint.GetDamping(), 1);
                 //muscleFeruency(2)
