@@ -12,31 +12,45 @@ public class Joints : MonoBehaviour {
 
     public float minDist { get; set; }
     public float maxDist { get; set; }
-    public bool spawnMuscle = true;
+
+    public float contractionRate { get; set; }
+    public float timeBetwenePulses { get; set; }
+    public float timeDeckey { get; set; }
+    private float currentPulseTime = 0;
+    private bool contracting = true;
 
     private void Start()
     { 
         spJoint = GetComponent<SpringJoint2D>();
         spJoint.connectedBody = goTarget.GetComponent<Rigidbody2D>();
         SpawnMuscle();
+
+        if (contractionRate == 0)
+            contractionRate = 0.5f;
+        if (timeBetwenePulses == 0)
+            timeBetwenePulses = 1f;
+        if (timeDeckey == 0)
+            timeDeckey = 0.01f;
     }
 
     private void Update()
     {
-        ClampDistance(minDist, maxDist);
+        ClampDistance(minDist, maxDist);      
         UpdateMuscle();
+    }
+
+    private void FixedUpdate()
+    {
+        TwitchMuscle();
     }
 
     /// <summary>
     /// Spawns Muscle
     /// </summary>
     private void SpawnMuscle()
-    {
-        if (spawnMuscle)
-        {
-            goMuscle = Instantiate(goMusclePrfab, new Vector3(), Quaternion.identity);
-            goMuscle.transform.SetParent(transform);
-        }
+    { 
+        goMuscle = Instantiate(goMusclePrfab, new Vector3(), Quaternion.identity);
+        goMuscle.transform.SetParent(transform);
     }
 
     /// <summary>
@@ -143,5 +157,39 @@ public class Joints : MonoBehaviour {
         Vector3 diference = vec1 - transform.position;
         float sign = (vec1.y < transform.position.y) ? -1.0f : 1.0f;
         return Vector3.Angle(Vector3.left, diference) * sign;
+    }
+
+    private void TwitchMuscle()
+    {
+        if (currentPulseTime == 0)
+        {
+            //Kad muscle sasniedz savu min/max distanci tad tas maina savu saliksanas virzienu
+            if (maxDist != 0)
+            {
+                if (spJoint.distance > maxDist)
+                {
+                    contracting = true;
+                }
+                else if (spJoint.distance < minDist)
+                {
+                    contracting = false;
+                }
+            }
+
+            if (contracting)
+            {
+                spJoint.distance -= contractionRate;
+            }
+            else
+            {
+                spJoint.distance += contractionRate;
+            }
+
+            currentPulseTime = timeBetwenePulses;
+        }
+        else
+        {
+            currentPulseTime -= timeDeckey;
+        }
     }
 }
