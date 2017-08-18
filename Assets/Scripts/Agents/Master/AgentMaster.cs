@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class AgentMaster : MonoBehaviour {
 
-    //decoded seed: name(lenght): nodeCount(1|max = 6)|nodeNr(1)nodeLoactinX(2)nodeLoactinY(2)muscleMinDist(3)muscleMaxDist(3)muscleDamping(1)muscleFeruency(2)muscleContractionRate(1)muscleTimeBetvinePulses(3)muscleTimeDelay(2)muscleTargetNodeNr(1)
-    //0|000000000000000000000|000000000000000000000|000000000000000000000|000000000000000000000|000000000000000000000|000000000000000000000|000000000000000000000|
+    //decoded seed: name(lenght): nodeCount(1|max = 6)|nodeNr(1)nodeLoactinX(2)nodeLoactinY(2)muscleMinDist(3)muscleMaxDist(3)muscleDamping(1)muscleFeruency(2)muscleContractionRate(1)muscleContractionFlipTime(3)muscleTargetNodeNr(1)
+    //0|0000000000000000000|0000000000000000000|0000000000000000000|0000000000000000000|0000000000000000000|0000000000000000000|0000000000000000000|
     //00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     public string testSeed = "31000022ff00337f7f00000000000000000000";
     public string testSeed2;
@@ -99,7 +99,7 @@ public class AgentMaster : MonoBehaviour {
             }
             else
             {
-                testSeed2 += "000000000000000000000";
+                testSeed2 += "0000000000000000000";
             }
         }
 
